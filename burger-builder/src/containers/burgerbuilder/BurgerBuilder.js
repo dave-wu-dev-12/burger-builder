@@ -4,6 +4,7 @@ import { INGREDIENTS } from "../../enums/BurgerIngredient";
 import BuilderControl from "../../components/builderControl/BuilderControl";
 import "./BurgerBuilder.css";
 import Modal from "../../components/modal/Modal";
+import Backdrop from "../../components/backdrop/Backdrop";
 
 function BurgerBuilder() {
   const [SelectedBurgerIngredients, setSelectedBurgerIngredients] = useState(
@@ -79,12 +80,12 @@ function BurgerBuilder() {
           </div>
         )}
       </h4>
-      {isCheckout && (
-        <Modal
-          selectedBurgerIngredients={SelectedBurgerIngredients}
-          BurgerTotal={BurgerTotal}
-        />
-      )}
+      <Modal
+        selectedBurgerIngredients={SelectedBurgerIngredients}
+        BurgerTotal={BurgerTotal}
+        isCheckout={isCheckout}
+      />
+      {isCheckout && <Backdrop turnOff={() => setIsCheckout(false)} />}
     </div>
   );
 }

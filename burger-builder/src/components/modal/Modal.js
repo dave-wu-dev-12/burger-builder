@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./modal.css";
 
-function Modal({ selectedBurgerIngredients, BurgerTotal }) {
+function Modal({ selectedBurgerIngredients, BurgerTotal, isCheckout }) {
   // no need to run useeffect here since children are re-rendered by parent state change
   // and we will get all the updated items
   let ingredientList = [];
@@ -27,7 +27,11 @@ function Modal({ selectedBurgerIngredients, BurgerTotal }) {
   });
 
   return (
-    <div className="summaryModal">
+    <div
+      className={
+        "summaryModal " + (isCheckout ? "onScreenModal" : "offScreenModal")
+      }
+    >
       <h4>Your Burger Order</h4>
       <h6>Wow that is a delcious burger you have created</h6>
       {ingredientList.length > 0 && ingredientList}

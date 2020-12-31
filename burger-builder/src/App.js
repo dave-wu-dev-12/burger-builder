@@ -1,10 +1,11 @@
 import "./App.css";
 import BurgerBuilder from "./containers/burgerbuilder/BurgerBuilder";
-import Burger from "./components/Burger/Burger";
+import Toolbar from "./components/toolbar/Toolbar";
 
 function App() {
   return (
     <div className="App">
+      <Toolbar />
       <BurgerBuilder />
     </div>
   );

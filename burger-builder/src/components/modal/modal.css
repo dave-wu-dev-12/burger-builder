@@ -6,4 +6,15 @@
   top: 15vh;
   border: 1px black solid;
   background-color: white;
+  transition: all 0.3s ease-in;
+}
+
+.onScreenModal {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.offScreenModal {
+  transform: translateY(-100vh);
+  opacity: 0;
 }

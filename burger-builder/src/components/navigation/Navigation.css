@@ -1,0 +1,16 @@
+.navigationList {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigationList__item {
+  margin: 0 1em;
+  cursor: pointer;
+  padding: 1em;
+}
+
+.navigationList__item:hover {
+  background-color: white;
+}

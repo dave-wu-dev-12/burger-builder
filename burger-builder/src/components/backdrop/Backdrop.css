@@ -1,0 +1,10 @@
+.backdrop {
+  position: fixed;
+  background-color: grey;
+  opacity: 0.6;
+  width: 100vh;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
