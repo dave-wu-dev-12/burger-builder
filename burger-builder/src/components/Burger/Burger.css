@@ -1,6 +1,4 @@
 .burger {
-  min-height: 26vh;
-  min-width: 80%;
-  max-height: 50vh;
+  height: 50vh;
   overflow-y: scroll;
 }

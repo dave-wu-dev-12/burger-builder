@@ -1,7 +1,12 @@
 import React from "react";
 import "./BurgerIngredient.css";
 
-function BurgerIngredient({ ingredientType }) {
+function BurgerIngredient({
+  ingredientType,
+  removeBurgerIngredient,
+  ingredientIndex,
+  isDefault,
+}) {
   // run this switch statement when the component renders
   let ingredientHandler = null;
   switch (ingredientType) {
@@ -33,7 +38,13 @@ function BurgerIngredient({ ingredientType }) {
       break;
   }
 
-  return <div>{ingredientHandler}</div>;
+  const removeAddedItem = () => {
+    if (!isDefault) {
+      removeBurgerIngredient(ingredientIndex);
+    }
+  };
+
+  return <div onClick={removeAddedItem}>{ingredientHandler}</div>;
 }
 
 export default BurgerIngredient;
