@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import "./modal.css";
+import { useSelector } from "react-redux";
 
-function Modal({ selectedBurgerIngredients, BurgerTotal, isCheckout }) {
+function Modal({ selectedBurgerIngredients, isCheckout }) {
+  const burgerTotalRedux = useSelector((state) => state.burgerTotal);
+
   // no need to run useeffect here since children are re-rendered by parent state change
   // and we will get all the updated items
   let ingredientList = [];
@@ -35,7 +38,7 @@ function Modal({ selectedBurgerIngredients, BurgerTotal, isCheckout }) {
       <h4>Your Burger Order</h4>
       <h6>Wow that is a delcious burger you have created</h6>
       {ingredientList.length > 0 && ingredientList}
-      <h4>Grand Total $ {BurgerTotal}</h4>
+      <h4>Grand Total $ {burgerTotalRedux}</h4>
       <button>Would you like to proceed?</button>
     </div>
   );

@@ -5,6 +5,8 @@ import BuilderControl from "../../components/builderControl/BuilderControl";
 import "./BurgerBuilder.css";
 import Modal from "../../components/modal/Modal";
 import Backdrop from "../../components/backdrop/Backdrop";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function BurgerBuilder() {
   const [SelectedBurgerIngredients, setSelectedBurgerIngredients] = useState(
@@ -13,6 +15,13 @@ function BurgerBuilder() {
   const [BurgerTotal, setBurgerTotal] = useState(0);
   const [isCheckout, setIsCheckout] = useState(false);
 
+  const [counter, setCounter] = useState(0);
+
+  const dispatch = useDispatch();
+  // gets and listens to the state.counter object in the reducer
+  const counterRedux = useSelector((state) => state.counter);
+  const counterResultsRedux = useSelector((state) => state.results);
+  const burgerTotalRedux = useSelector((state) => state.burgerTotal);
   const burgerBasePrice = 5;
 
   const addBurgerIngredient = (ingredient) => {
@@ -31,7 +40,7 @@ function BurgerBuilder() {
   };
 
   const getBurgerTotal = () => {
-    let burgerTotal = 0;
+    let burgerTotal = burgerBasePrice;
 
     if (SelectedBurgerIngredients.length > 0) {
       SelectedBurgerIngredients.map((ingredient) => {
@@ -39,7 +48,24 @@ function BurgerBuilder() {
       });
     }
 
-    setBurgerTotal(burgerTotal + burgerBasePrice);
+    //setBurgerTotal(burgerTotal + burgerBasePrice);
+    dispatch({ type: "update_burger_total", burgerTotal: burgerTotal });
+  };
+
+  const incrementCounter = () => {
+    setTimeout(() => {
+      // we pass this object to the reducer
+      // containing the action we want and
+      // also the data we want to pass to it
+      dispatch({ type: "increment_counter", additional: 5 });
+    }, 2000);
+  };
+
+  const removeResultFromList = (valueToRemove) => {
+    // we pass this object to the reducer
+    // containing the action we want and
+    // also the data we want to pass to it
+    dispatch({ type: "delete_counter_result", valueToRemove: valueToRemove });
   };
 
   // set a use effect to get our new total when react is done adding the new ingredient
@@ -47,9 +73,24 @@ function BurgerBuilder() {
     getBurgerTotal();
   }, [SelectedBurgerIngredients]);
 
+  useEffect(() => {
+    console.log(counter);
+  }, [counter]);
+
   return (
     <div className="burgerBuilder">
+      <h1>COUNTER IS : {counterRedux}</h1>
+      <h1 onClick={incrementCounter}>+</h1>
+      <h1>Counter results list</h1>
+      <ul>
+        {counterResultsRedux.map((res) => (
+          <li onClick={() => removeResultFromList(res.value)} key={res.id}>
+            {res.value}
+          </li>
+        ))}
+      </ul>
       <Burger
+        incrementCounter={() => incrementCounter()}
         selectedBurgerIngredients={SelectedBurgerIngredients}
         removeBurgerIngredient={removeBurgerIngredient}
       />
@@ -57,7 +98,7 @@ function BurgerBuilder() {
       {Object.entries(INGREDIENTS).map(([key, value]) => (
         <BuilderControl
           key={key}
-          addBurgerAction={() => addBurgerIngredient(value)}
+          addBurgerAction={addBurgerIngredient}
           ingredient={value}
         />
       ))}
@@ -67,7 +108,7 @@ function BurgerBuilder() {
           " $" + burgerBasePrice
         ) : (
           <div>
-            {"$" + BurgerTotal}{" "}
+            {"$" + burgerTotalRedux}{" "}
             <div>
               <button
                 onClick={() => {
@@ -82,7 +123,6 @@ function BurgerBuilder() {
       </h4>
       <Modal
         selectedBurgerIngredients={SelectedBurgerIngredients}
-        BurgerTotal={BurgerTotal}
         isCheckout={isCheckout}
       />
       {isCheckout && <Backdrop turnOff={() => setIsCheckout(false)} />}

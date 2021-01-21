@@ -3,9 +3,13 @@ import BurgerIngredient from "../Burger/BurgerIngredient/BurgerIngredient";
 import "./Burger.css";
 import { INGREDIENTS } from "../../enums/BurgerIngredient";
 
-function Burger({ selectedBurgerIngredients, removeBurgerIngredient }) {
+function Burger({
+  selectedBurgerIngredients,
+  removeBurgerIngredient,
+  incrementCounter,
+}) {
   return (
-    <div className="burger">
+    <div className="burger" onClick={incrementCounter}>
       <BurgerIngredient
         ingredientType={INGREDIENTS.BREAD_TOP.type}
         isDefault="true"
